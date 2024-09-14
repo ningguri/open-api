@@ -46,4 +46,7 @@ jobs:
         docker build -t $ECR_URI:$IMAGE_TAG .
         docker push $ECR_URI:$IMAGE_TAG
 
-
+    # - name: Image digest
+    #   run: |
+    #     IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' 830085197049.dkr.ecr.us-east-1.amazonaws.com/web-app:${{ github.sha }})
+    #     echo "Docker image pushed: $IMAGE_DIGEST"
