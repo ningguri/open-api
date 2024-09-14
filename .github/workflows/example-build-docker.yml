@@ -41,12 +41,10 @@ jobs:
         ECR_URI: "830085197049.dkr.ecr.us-east-1.amazonaws.com/web-app"
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        yarn --frozen-lockfile
-        yarn nx build api-flowaccount-workshop
         docker build -t $ECR_URI:$IMAGE_TAG .
         docker push $ECR_URI:$IMAGE_TAG
 
-    # - name: Image digest
-    #   run: |
-    #     IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REPO_URI }}:${{ github.sha }})
-    #     echo "Docker image pushed: $IMAGE_DIGEST"
+    - name: Image digest
+      run: |
+        IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' 830085197049.dkr.ecr.us-east-1.amazonaws.com/web-app:${{ github.sha }})
+        echo "Docker image pushed: $IMAGE_DIGEST"
