@@ -32,9 +32,9 @@ jobs:
     #   id: ecr_uri
     #   run: echo "REPO_URI=$(aws ecr describe-repositories --repository-names my-repo --query 'repositories[0].repositoryUri' --output text)" >> $GITHUB_ENV
 
-    # - name: Log in to Amazon ECR
-    #   id: login-ecr
-    #   uses: aws-actions/amazon-ecr-login@v2
+    - name: Log in to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
 
     - name: Build, tag, and push Docker image
       env:
@@ -46,7 +46,7 @@ jobs:
         docker build -t $ECR_URI:$IMAGE_TAG .
         docker push $ECR_URI:$IMAGE_TAG
 
-    - name: Image digest
-      run: |
-        IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REPO_URI }}:${{ github.sha }})
-        echo "Docker image pushed: $IMAGE_DIGEST"
+    # - name: Image digest
+    #   run: |
+    #     IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REPO_URI }}:${{ github.sha }})
+    #     echo "Docker image pushed: $IMAGE_DIGEST"
